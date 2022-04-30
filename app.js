@@ -2,10 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs");
-const multer = require("multer");
 const app = express();
 require("dotenv").config();
-const seed = require("./seed");
 const prodRoutes = require("./routes/product");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
@@ -17,7 +15,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 mongoose
   .connect(process.env.MDB_CONNECT, {
     useNewUrlParser: true,
@@ -49,7 +47,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); // for login logout session
 
 //Configuring Google Strategy
-passport.use(
+/*passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GA_clientID,
@@ -68,7 +66,7 @@ passport.use(
       });
     }
   )
-);
+);*/
 
 //SERIALIZE AND DESERIALIZING
 passport.serializeUser(User.serializeUser());
